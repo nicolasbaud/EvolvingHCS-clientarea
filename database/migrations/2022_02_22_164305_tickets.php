@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->integer('ticketid', 25)->unique();
+            $table->integer('ticketid')->unique();
             $table->integer('userid');
             $table->string('department');
             $table->string('subject');
