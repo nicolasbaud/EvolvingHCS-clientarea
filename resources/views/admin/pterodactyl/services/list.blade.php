@@ -44,6 +44,8 @@
                                 <span class="badge badge-success">Actif</span>
                             @elseif ($service->status == 'pending')
                                 <span class="badge badge-warning">En attente</span>
+                            @elseif ($service->status == 'suspend')
+                                <span class="badge badge-warning">Suspendu</span>
                             @elseif ($service->status == 'expired')
                                 <span class="badge badge-danger">Expiré</span>
                             @endif
