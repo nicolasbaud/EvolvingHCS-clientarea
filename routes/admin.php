@@ -54,5 +54,15 @@ Route::prefix('admin')->group(function () {
             Route::put('/srv', 'update')->name('admin.pterodactyl.services');
          });
       });
+
+      Route::prefix('services')->group(function () {
+         Route::controller(App\Http\Controllers\Admin\Pterodactyl\Services\ListController::class)->group(function () {
+            Route::get('/', 'index')->name('admin.pterodactyl.services');
+         });
+         Route::controller(App\Http\Controllers\Admin\Pterodactyl\Services\EditController::class)->group(function () {
+            Route::get('/edit/{id}', 'index')->name('admin.pterodactyl.services.edit');
+            Route::post('/edit/{id}/power/{signal}', 'power')->name('admin.pterodactyl.services.power');
+         });
+      });
    });
 });

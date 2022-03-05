@@ -7,9 +7,6 @@
 @endsection
 
 @section('content')
-
-@include('errors.all')
-
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -20,7 +17,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="float-sm-right">
-                            Appartient à <a href="{{ route('admin.user.edit', ['id' => App\Models\Customers::find($invoice->userid)->id]) }}">{{ App\Models\Customers::find($invoice->userid)->firstname }} {{ App\Models\Customers::find($invoice->userid)->lastname }} ({{ App\Models\Customers::find($invoice->userid)->email }})</a>
+                            Appartient à <a href="{{ route('admin.user.edit', ['id' => App\Models\User::find($invoice->userid)->id]) }}">{{ App\Models\User::find($invoice->userid)->firstname }} {{ App\Models\User::find($invoice->userid)->lastname }} ({{ App\Models\User::find($invoice->userid)->email }})</a>
                         </div>
                     </div>
                 </div>

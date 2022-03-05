@@ -65,7 +65,7 @@ class ManageController extends Controller
             User::where('id', $id)->update([
                 'email_verified_at' => now(),
             ]);
-            return redirect(route('user.edit', ['id' => $id]))->with('success', 'Vérification forcé');
+            return redirect(route('admin.user.edit', ['id' => $id]))->with('success', 'Vérification forcé');
         } else {
             User::where('id', $id)->update([
                 'email_verified_at' => NULL,

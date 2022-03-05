@@ -57,6 +57,7 @@ class InvoiceItems extends Command
                         'recurrent_price' => $item->amount,
                         'location' => \App\Models\PterodactylNodes::where('id', \App\Models\PterodactylProducts::find($item->productid)->first()->node)->first()->id,
                         'status' => 'pending',
+                        'created_at' => now(),
                     ]);
                 } elseif ($item->type == 'renew.game') {
                     $PterodactylUnsuspend = new \App\Console\Commands\Pterodactyl\Delivery();
