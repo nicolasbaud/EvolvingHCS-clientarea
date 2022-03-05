@@ -59,7 +59,6 @@
 <div class="modal fade" id="create" tabindex="-1" aria-labelledby="createLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <form method="POST" action="{{ route('admin.pterodactyl.nodes.new') }}">
-            <input type="hidden" name="status" value="public">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">

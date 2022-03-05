@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('fqdn');
             $table->string('key');
             $table->string('pass');
-            $table->string('status');
+            $table->string('status')->default('public');
             $table->timestamps();
         });
     }
