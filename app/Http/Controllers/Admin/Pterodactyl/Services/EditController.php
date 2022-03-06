@@ -37,11 +37,24 @@ class EditController extends Controller
         $node = PterodactylNodes::find($service->location);
         $panel = new PterodactylApi($node->fqdn, $node->key, 'client');
         $panelapp = new PterodactylApi($node->fqdn, $node->pass, 'application');
+        
+        $list = json_decode(json_encode($panelapp->http->get('servers')), true);
 
+        $i = 0;
+        foreach ($list as $v) {
+            if ($v['external_id'] == $service->serviceid) {
+                $pterodactyl = 1;
+            } else {
+                $pterodactyl = 0;
+            }
+            $i++;
+        }
+        
         return view('admin.pterodactyl.services.edit', [
             'service' => $service,
             'client' => $panel->http,
             'application' => $panelapp->http,
+            'pterodactyl' => $pterodactyl,
         ]);
     }
 
@@ -71,18 +84,17 @@ class EditController extends Controller
     public function update($id, Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'location_id' => 'required|numeric',
-            'fqdn' => 'required|url',
-            'key' => 'required',
-            'pass' => 'required',
+            'userid' => 'required|integer|exists:users,id',
+            'offer_id' => 'required|integer|exists:pterodactyl_products,id',
+            'recurrent_price' => 'required|numeric',
+            'location' => 'required|integer|exists:pterodactyl_nodes,id',
+            'expired_at' => 'required|date|after:tomorrow',
+            'status' => 'required|string|in:active,pending,suspend,expired',
         ]);
 
-        $node = PterodactylNodes::find($id);
-        
-        $node->fill(['status' => 'public']);
-        $node->update($request->all());
+        $service = PterodactylServices::find($id);
+        $service->update($request->all());
 
-        return redirect(route('admin.pterodactyl.nodes'))->with('success', 'Node édité');
+        return redirect(route('admin.pterodactyl.services.edit', ['id' => $id]))->with('success', 'Service édité');
     }
 }

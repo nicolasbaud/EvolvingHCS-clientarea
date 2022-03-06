@@ -36,6 +36,17 @@ Route::prefix('admin')->group(function () {
       Route::post('/invoice/{id}/item/delete/{itemid}', 'deleteItems')->name('admin.invoice.item.delete');
    });
 
+   Route::prefix('tickets')->group(function () {
+      Route::controller(App\Http\Controllers\Admin\Support\TicketsController::class)->group(function () {
+         Route::get('/', 'index')->name('admin.tickets');
+      });
+      Route::controller(App\Http\Controllers\Admin\Support\TicketController::class)->group(function () {
+         Route::get('/{id}', 'index')->name('admin.ticket');
+         Route::post('/{id}', 'update')->name('admin.ticket.reply');
+         Route::delete('/{id}', 'delete')->name('admin.ticket.delete');
+      });
+   });
+
    Route::prefix('pterodactyl')->group(function () {
       Route::prefix('nodes')->group(function () {
          Route::controller(App\Http\Controllers\Admin\Pterodactyl\Nodes\ListController::class)->group(function () {
@@ -61,7 +72,18 @@ Route::prefix('admin')->group(function () {
          });
          Route::controller(App\Http\Controllers\Admin\Pterodactyl\Services\EditController::class)->group(function () {
             Route::get('/edit/{id}', 'index')->name('admin.pterodactyl.services.edit');
+            Route::put('/edit/{id}', 'update')->name('admin.pterodactyl.services.save');
             Route::post('/edit/{id}/power/{signal}', 'power')->name('admin.pterodactyl.services.power');
+         });
+      });
+
+      Route::prefix('logs')->group(function () {
+         Route::controller(App\Http\Controllers\Admin\Pterodactyl\Logs\ListController::class)->group(function () {
+            Route::get('/', 'index')->name('admin.pterodactyl.logs');
+            Route::delete('/delete/{id}', 'delete')->name('admin.pterodactyl.logs.delete');
+         });
+         Route::controller(App\Http\Controllers\Admin\Pterodactyl\Logs\ViewController::class)->group(function () {
+            Route::get('/{id}', 'index')->name('admin.pterodactyl.logs.view');
          });
       });
    });

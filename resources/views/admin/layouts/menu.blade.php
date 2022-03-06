@@ -17,6 +17,13 @@
         <p>Factures</p>
     </a>
 </li>
+<li class="nav-header">TICKET</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('admin.tickets') }}">
+        <i class="fa fa-fw fa-support"></i>
+        <p>Tickets</p>
+    </a>
+</li>
 <li class="nav-header">Pterodactyl</li>
 <li class="nav-item">
     <a class="nav-link" href="{{ route('admin.pterodactyl.nodes') }}">
@@ -34,5 +41,11 @@
     <a class="nav-link" href="{{ route('admin.pterodactyl.services') }}">
         <i class="fa fa-fw fa-cubes"></i>
         <p>Services</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('admin.pterodactyl.logs') }}">
+        <i class="fa fa-fw fa-newspaper"></i>
+        <p>Logs</p>
     </a>
 </li>

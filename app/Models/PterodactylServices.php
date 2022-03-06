@@ -15,4 +15,25 @@ class PterodactylServices extends Model
      * @var string
      */
     protected $primaryKey = 'serviceid';
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = true;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'userid',
+        'offer_id',
+        'recurrent_price',
+        'location',
+        'expired_at',
+        'status',
+    ];
 }

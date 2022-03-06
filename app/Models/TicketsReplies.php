@@ -23,6 +23,7 @@ class TicketsReplies extends Model
      */
     protected $fillable = [
         'ticketid',
+        'adminid',
         'userid',
         'content',
     ];

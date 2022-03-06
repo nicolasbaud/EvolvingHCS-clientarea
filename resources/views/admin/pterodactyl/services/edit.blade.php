@@ -20,72 +20,78 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="card">
-            <div class="card-header">
-                <h6 class="card-title">Information basique</h6>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <label>Identifiant service</label>
-                        <input disabled value="{{ $service->serviceid }}" class="form-control">
+            <form method="post" action="{{ route('admin.pterodactyl.services.save', ['id' => $service->serviceid]) }}">
+                @csrf
+                @method('PUT')
+                <div class="card-header">
+                    <h6 class="card-title">Information basique</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Identifiant service</label>
+                            <input disabled value="{{ $service->serviceid }}" class="form-control">
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Utilisateur</label>
+                            <select name="userid" class="@error('userid') is-invalid @enderror form-control select2" style="width: 100%;">
+                                @foreach (App\Models\User::get() as $customer)
+                                    <option @selected($service->userid == $customer->id) value="{{ $customer->id }}">{{ $customer->email }} ({{ $customer->firstname }} {{ $customer->lastname }})</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-sm-6">
-                        <label>Utilisateur</label>
-                        <select name="userid" class="@error('userid') is-invalid @enderror form-control select2" style="width: 100%;">
-                            @foreach (App\Models\User::get() as $customer)
-                                <option value="{{ $customer->id }}">{{ $customer->email }} ({{ $customer->firstname }} {{ $customer->lastname }})</option>
-                            @endforeach
-                        </select>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Offre</label>
+                            <select name="offer_id" class="@error('offer_id') is-invalid @enderror form-control select2" style="width: 100%;">
+                                @foreach (App\Models\PterodactylProducts::get() as $offer)
+                                    <option @selected($service->offer_id == $offer->id) value="{{ $offer->id }}">{{ $offer->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Prix</label>
+                            <input type="text" name="recurrent_price" class="@error('recurrent_price') is-invalid @enderror form-control" value="{{ $service->recurrent_price }}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Localisation</label>
+                            <select name="location" class="@error('location') is-invalid @enderror form-control select2" style="width: 100%;">
+                                @foreach (App\Models\PterodactylNodes::get() as $node)
+                                    <option @selected($service->location == $node->id) value="{{ $node->id }}">{{ $node->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Date d'expiration</label>
+                            <input type="text" name="expired_at" class="@error('expired_at') is-invalid @enderror form-control" value="{{ $service->expired_at }}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label>Statut</label>
+                            <select name="status" class="@error('status') is-invalid @enderror form-control select2" style="width: 100%;">
+                                <option @selected($service->status == 'active') value="active">Actif</option>
+                                <option @selected($service->status == 'pending') value="pending">En attente</option>
+                                <option @selected($service->status == 'suspend') value="suspend">Suspendu</option>
+                                <option @selected($service->status == 'expired') value="expired">Expiré</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <label>Offre</label>
-                        <select name="offer_id" class="@error('offer_id') is-invalid @enderror form-control select2" style="width: 100%;">
-                            @foreach (App\Models\PterodactylProducts::get() as $offer)
-                                <option value="{{ $offer->id }}">{{ $offer->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-sm-6">
-                        <label>Prix</label>
-                        <input type="text" name="recurrent_price" class="@error('recurrent_price') is-invalid @enderror form-control" value="{{ $service->recurrent_price }}">
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">Sauvegarder</button>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <label>Localisation</label>
-                        <select name="location" class="@error('location') is-invalid @enderror form-control select2" style="width: 100%;">
-                            @foreach (App\Models\PterodactylNodes::get() as $node)
-                                <option value="{{ $node->id }}">{{ $node->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-sm-6">
-                        <label>Date d'expiration</label>
-                        <input type="text" name="expired_at" class="@error('expired_at') is-invalid @enderror form-control" value="{{ $service->expired_at }}">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <label>Statut</label>
-                        <select name="status" class="@error('status') is-invalid @enderror form-control select2" style="width: 100%;">
-                            <option value="active">Actif</option>
-                            <option value="pending">En attente</option>
-                            <option value="expired">Expiré</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer">
-                <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Sauvegarder</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
     <div class="col-sm-6">
         <div class="card">
+            @if ($pterodactyl == '1')
             <div class="card-header">
                 <h6 class="card-title">
                     Statut: 
@@ -138,6 +144,16 @@
                     </div>
                 </div>
             </div>
+            @else
+            <div class="card-header">
+                <h6 class="card-title">Erreur</h6>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-danger">
+                    Le serveur est introuvable sur le panel
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </div>

@@ -52,7 +52,7 @@
                         </td>
                         <td>{{ Carbon\Carbon::parse($service->created_at)->format('d/m/Y') }}</td>
                         <td class="row">
-                            <button data-toggle="modal" data-target="#edit{{ $service->id }}" class="btn btn-icons btn-primary"><i class="fa fa-edit"></i></button>
+                            <a href="{{ route('admin.pterodactyl.services.edit', ['id' => $service->serviceid]) }}" class="btn btn-icons btn-primary"><i class="fa fa-edit"></i></a>
                             &nbsp;
                             <form method="post" action="{{ route('admin.pterodactyl.nodes.delete', ['id' => $service->id]) }}">
                                 @method('DELETE')
