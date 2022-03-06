@@ -17,7 +17,6 @@ return [
         // App\Console\Commands\ExampleCommand::class,
         App\Console\Commands\InvoiceItems::class,
         App\Console\Commands\Pterodactyl\Delivery::class,
-        App\Console\Commands\Users\UserMakeCommand::class,
     ],
 
     /*
