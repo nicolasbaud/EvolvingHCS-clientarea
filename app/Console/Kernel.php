@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('invoice:items delivery')->everyMinute();
         $schedule->command('pterodactyl delivery')->everyMinute();
         $schedule->command('pterodactyl deadline')->everyMinute();
+        $schedule->command('evolving:setup:dbtoenv')->everyMinute();
     }
 
     /**

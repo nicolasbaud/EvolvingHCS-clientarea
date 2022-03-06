@@ -28,6 +28,13 @@ Route::middleware(['permission:admin'])->group(function () {
 
       Route::get('/invoices', [App\Http\Controllers\Admin\Invoices\ListController::class, 'index'])->name('admin.invoices');
 
+      Route::prefix('settings')->group(function () {
+         Route::controller(App\Http\Controllers\Admin\Settings\BaseController::class)->group(function () {
+            Route::get('/', 'index')->name('admin.settings');
+            Route::patch('/', 'update')->name('admin.settings.update');
+         });
+      });
+
       Route::controller(App\Http\Controllers\Admin\Invoices\ManageController::class)->group(function () {
          Route::post('/invoices/new', 'create')->name('admin.invoice.new');
          Route::get('/invoice/{id}', 'index')->name('admin.invoice.edit');

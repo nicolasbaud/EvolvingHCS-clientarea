@@ -53,6 +53,7 @@ class AppSettingsCommand extends Command
      */
     protected $signature = 'evolving:setup:app
                             {--new-salt : Whether or not to generate a new salt for Hashids.}
+                            {--name= : The Name that this Panel is running on.}
                             {--url= : The URL that this Panel is running on.}
                             {--timezone= : The timezone to use for Panel times.}
                             {--cache= : The cache driver backend to use.}
@@ -89,6 +90,12 @@ class AppSettingsCommand extends Command
         if (empty($this->config->get('hashids.salt')) || $this->option('new-salt')) {
             $this->variables['HASHIDS_SALT'] = Str::random(20);
         }
+
+        $this->output->note('Nom de l\'application');
+        $this->variables['APP_NAME'] = $this->option('name') ?? $this->ask(
+            'Nom de l\'application',
+            $this->config->get('app.name')
+        );
 
         $this->output->comment(trans('command/messages.environment.app.app_url_help'));
         $this->variables['APP_URL'] = $this->option('url') ?? $this->ask(
