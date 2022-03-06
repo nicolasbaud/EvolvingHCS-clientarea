@@ -20,7 +20,7 @@
 <li class="nav-header">TICKET</li>
 <li class="nav-item">
     <a class="nav-link" href="{{ route('admin.tickets') }}">
-        <i class="fa fa-fw fa-support"></i>
+        <i class="fa fa-fw fa-life-ring"></i>
         <p>Tickets</p>
     </a>
 </li>
