@@ -5,6 +5,12 @@
     </a>
 </li>
 <li class="nav-item">
+    <a class="nav-link" href="{{ route('admin.settings') }}">
+        <i class="fa fa-fw fa-cogs"></i>
+        <p>Paramètres</p>
+    </a>
+</li>
+<li class="nav-item">
     <a class="nav-link" href="{{ route('admin.users') }}">
         <i class="fa fa-fw fa-users"></i>
         <p>Utilisateurs</p>
