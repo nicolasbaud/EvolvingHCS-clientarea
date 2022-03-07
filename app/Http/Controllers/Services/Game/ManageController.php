@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Timdesm\PterodactylPhpApi\PterodactylApi;
 use App\Models\Invoices;
 use App\Models\InvoiceItems;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ManageController extends Controller
 {
@@ -25,6 +26,11 @@ class ManageController extends Controller
     public function render($id)
     {
         $this->service = PterodactylServices::where('serviceid', $id)->where('userid', Auth::user()->id);
+
+        if ($this->service->count() !== '1') {
+            throw new NotFoundHttpException();
+        }
+
         $this->node = PterodactylNodes::find($this->service->first()->location);
         $this->panel = new PterodactylApi($this->node->fqdn, $this->node->key, 'client');
         $this->panelapp = new PterodactylApi($this->node->fqdn, $this->node->pass, 'application');
