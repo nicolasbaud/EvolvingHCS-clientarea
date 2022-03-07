@@ -69,7 +69,6 @@ Route::middleware(['permission:admin'])->group(function () {
                Route::get('/', 'index')->name('admin.pterodactyl.products');
                Route::post('/', 'store')->name('admin.pterodactyl.products.new');
                Route::put('/{id}', 'update')->name('admin.pterodactyl.products.edit');
-               Route::put('/srv', 'update')->name('admin.pterodactyl.services');
             });
          });
 
