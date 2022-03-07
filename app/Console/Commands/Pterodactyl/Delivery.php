@@ -106,7 +106,7 @@ class Delivery extends Command
                 }
                 $logCreate = $pterodactyl->servers->create([
                     'name' => Str::random(10),
-                    'external_id' => $PterodactylServices->serviceid,
+                    'external_id' => "".$PterodactylServices->serviceid."",
                     'user' => $userId,
                     'egg' => $eggConfig->id,
                     'docker_image' => $eggConfig->docker_image,

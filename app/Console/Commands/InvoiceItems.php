@@ -51,7 +51,7 @@ class InvoiceItems extends Command
                 } elseif ($item->type == 'hosting.game') {
                     \App\Models\PterodactylServices::insert([
                         'userid' => $item->userid,
-                        'serviceid' => rand(100000, 10000000),
+                        'serviceid' => rand(0000000, 10000000),
                         'offer_id' => $item->productid,
                         'first_price' => $item->amount,
                         'recurrent_price' => $item->amount,

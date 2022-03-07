@@ -54,7 +54,7 @@
                         <td class="row">
                             <a href="{{ route('admin.pterodactyl.services.edit', ['id' => $service->serviceid]) }}" class="btn btn-icons btn-primary"><i class="fa fa-edit"></i></a>
                             &nbsp;
-                            <form method="post" action="{{ route('admin.pterodactyl.nodes.delete', ['id' => $service->id]) }}">
+                            <form method="post" action="{{ route('admin.pterodactyl.services.delete', ['id' => $service->id]) }}">
                                 @method('DELETE')
                                 @csrf
                                 <button type="submit" class="btn btn-icons btn-danger"><i class="fa fa-trash"></i></button>

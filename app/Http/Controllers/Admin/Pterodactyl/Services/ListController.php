@@ -68,8 +68,8 @@ class ListController extends Controller
     public function delete($id)
     {
 
-        PterodactylNodes::where('id', $id)->delete();
+        PterodactylServices::where('id', $id)->delete();
 
-        return redirect(route('admin.pterodactyl.nodes'))->with('success', 'Node supprimé');
+        return redirect(route('admin.pterodactyl.services'))->with('success', 'Service supprimé');
     }
 }

@@ -76,6 +76,7 @@ Route::middleware(['permission:admin'])->group(function () {
          Route::prefix('services')->group(function () {
             Route::controller(App\Http\Controllers\Admin\Pterodactyl\Services\ListController::class)->group(function () {
                Route::get('/', 'index')->name('admin.pterodactyl.services');
+               Route::delete('/{id}', 'delete')->name('admin.pterodactyl.services.delete');
             });
             Route::controller(App\Http\Controllers\Admin\Pterodactyl\Services\EditController::class)->group(function () {
                Route::get('/edit/{id}', 'index')->name('admin.pterodactyl.services.edit');
