@@ -27,7 +27,7 @@ class ManageController extends Controller
     {
         $this->service = PterodactylServices::where('serviceid', $id)->where('userid', Auth::user()->id);
 
-        if ($this->service->count() !== '1') {
+        if ($this->service->count() != '1') {
             throw new NotFoundHttpException();
         }
 
