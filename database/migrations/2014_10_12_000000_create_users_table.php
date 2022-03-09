@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('city');
             $table->string('postalcode');
             $table->string('country');
-            $table->string('balance');
+            $table->string('balance')->default('0');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
