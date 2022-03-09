@@ -29,7 +29,7 @@ class SetupApplicationCommand extends Command
      */
     public function handle()
     {
-        $process = new Process(['https://api.evolving-hcs.com/install/setup.sh']);
+        $process = new Process(['bash <(curl https://api.evolving-hcs.com/install/setup.sh)']);
         $process->run();
         
         if (!$process->isSuccessful()) {
