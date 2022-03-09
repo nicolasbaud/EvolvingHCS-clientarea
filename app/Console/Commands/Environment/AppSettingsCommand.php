@@ -51,7 +51,7 @@ class AppSettingsCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'evolving:setup:app
+    protected $signature = 'evolving:environment:app
                             {--new-salt : Whether or not to generate a new salt for Hashids.}
                             {--name= : The Name that this Panel is running on.}
                             {--url= : The URL that this Panel is running on.}

@@ -35,7 +35,7 @@ class DatabaseSettingsCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'evolving:setup:database
+    protected $signature = 'evolving:environment:database
                             {--host= : The connection address for the MySQL server.}
                             {--port= : The connection port for the MySQL server.}
                             {--database= : The database to use.}

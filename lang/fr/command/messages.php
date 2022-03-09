@@ -2,6 +2,20 @@
 
 return [
     'environment' => [
+        'mail' => [
+            'ask_smtp_host' => 'Hôte SMTP (e.g. smtp.gmail.com)',
+            'ask_smtp_port' => 'Port SMTP',
+            'ask_smtp_username' => 'Nom d\'utilisateur SMTP',
+            'ask_smtp_password' => 'Mot de passe SMTP',
+            'ask_mailgun_domain' => 'Domaine Mailgun',
+            'ask_mailgun_secret' => 'Clé API de Mailgun',
+            'ask_mandrill_secret' => 'Clé API de Mandrill',
+            'ask_postmark_username' => 'Clé API de Postmark',
+            'ask_driver' => 'Quel pilote doit être utilisé pour l\'envoi d\'e-mails ?',
+            'ask_mail_from' => 'L\'adresse email d\'où les emails doivent provenir',
+            'ask_mail_name' => 'Nom à partir duquel les e-mails doivent apparaître',
+            'ask_encryption' => 'Méthode de cryptage à utiliser',
+        ],
         'database' => [
             'host_warning' => 'Il est fortement recommandé de ne pas utiliser "localhost" comme hôte de votre base de données, car nous avons constaté de fréquents problèmes de connexion de socket. Si vous souhaitez utiliser une connexion locale, vous devez utiliser "127.0.0.1".',
             'host' => 'Hôte de la base de données',
