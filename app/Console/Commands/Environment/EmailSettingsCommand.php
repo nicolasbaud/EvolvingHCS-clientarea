@@ -4,6 +4,7 @@ namespace App\Console\Commands\Environment;
 use Illuminate\Console\Command;
 use App\Traits\Commands\EnvironmentWriterTrait;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
+use Illuminate\Support\Str;
 
 class EmailSettingsCommand extends Command
 {
@@ -22,7 +23,7 @@ class EmailSettingsCommand extends Command
     /**
      * @var string
      */
-        protected $signature = 'p:environment:mail
+        protected $signature = 'evolving:environment:mail
                                 {--driver= : The mail driver to use.}
                             {--email= : Email address that messages from the Panel will originate from.}
                             {--from= : The name emails from the Panel will appear to be from.}
@@ -65,7 +66,7 @@ class EmailSettingsCommand extends Command
             ], $this->config->get('mail.driver', 'smtp')
         );
 
-        $method = 'setup' . studly_case($this->variables['MAIL_DRIVER']) . 'DriverVariables';
+        $method = 'setup' . Str::studly($this->variables['MAIL_DRIVER']) . 'DriverVariables';
         if (method_exists($this, $method)) {
             $this->{$method}();
         }
