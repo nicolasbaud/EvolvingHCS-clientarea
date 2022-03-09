@@ -3,7 +3,8 @@
 namespace App\Console\Commands\Environment;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 class SetupApplicationCommand extends Command
 {
@@ -28,12 +29,13 @@ class SetupApplicationCommand extends Command
      */
     public function handle()
     {
-        Artisan::call('down');
-        Artisan::call('evolving:environment:database');
-        Artisan::call('php artisan migrate');
-        Artisan::call('evolving:environment:app');
-        Artisan::call('evolving:environment:mail');
-        Artisan::call('up');
+        $process = new Process(['https://api.evolving-hcs.com/install/setup.sh']);
+        $process->run();
+        
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+        
         $this->info('Done !');
     }
 }
