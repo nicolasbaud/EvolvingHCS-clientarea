@@ -29,13 +29,8 @@ class SetupApplicationCommand extends Command
      */
     public function handle()
     {
-        $process = new Process(['bash <(curl https://api.evolving-hcs.com/install/setup.sh)']);
-        $process->run();
-        
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-        
-        $this->info('Done !');
+        $this->info('Commande indisponible !');
+        $this->info('Veuillez utiliser la commande :');
+        $this->info('bash <(curl https://api.evolving-hcs.com/install/setup.sh)');
     }
 }
