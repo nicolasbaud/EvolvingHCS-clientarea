@@ -12,14 +12,14 @@ class SetupApplicationCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:user';
+    protected $signature = 'evolving:setup';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new user';
+    protected $description = 'Setup Application';
 
     /**
      * Execute the console command.
