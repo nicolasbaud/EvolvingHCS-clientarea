@@ -2,7 +2,7 @@
 
 <p align="center">
 <img src="https://img.shields.io/discord/949421682349711450?style=for-the-badge">
-<img src="https://img.shields.io/github/downloads/nicolasbaud/EvolvingHCS-clientarea/latest/total?style=for-the-badge">
+<img src="https://img.shields.io/github/downloads-pre/nicolasbaud/EvolvingHCS-clientarea/latest/total?style=for-the-badge">
 <img src="https://img.shields.io/github/stars/nicolasbaud/EvolvingHCS-clientarea?style=for-the-badge">
 <img src="https://img.shields.io/github/license/nicolasbaud/EvolvingHCS-clientarea?style=for-the-badge">
 </p>
