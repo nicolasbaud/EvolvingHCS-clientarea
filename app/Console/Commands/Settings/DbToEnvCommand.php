@@ -5,6 +5,7 @@ use DateTimeZone;
 use Illuminate\Console\Command;
 use App\Traits\Commands\EnvironmentWriterTrait;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Artisan;
 
 class DbToEnvCommand extends Command
 {
@@ -63,6 +64,7 @@ class DbToEnvCommand extends Command
             Setting::orderBy('id', 'DESC')->delete();
 
             $this->info('Ok !');
+            Artisan::call('config:clear');
         } else {
             $this->info('Nothing');
         }

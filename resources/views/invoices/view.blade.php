@@ -10,10 +10,10 @@
         <div class="row justify-content-between">
           <div class="col-lg-3 col-md-5 text-left mt-3">
             <h4 class="mb-1">Facturé par :</h4>
-            <span class="d-block">Association SWIZCLOUD</span>
-            <p>78 Avenue des Champs-Élysées<br>
-              75008 Paris<br>
-              France
+            <span class="d-block">{{ config('app.name') }}</span>
+            <p>{{ config('app.address') }}<br>
+              {{ config('app.zip') }} {{ config('app.city') }}<br>
+              {{ config('app.country') }}
             </p>
           </div>
           <div class="col-lg-3 col-md-5 text-left mt-3">

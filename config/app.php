@@ -28,6 +28,11 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'address' => env('APP_ADDRESS', 'undefined'),
+    'zip' => env('APP_ZIP', 'undefined'),
+    'state' => env('APP_STATE', 'undefined'),
+    'city' => env('APP_CITY', 'undefined'),
+    'country' => env('APP_COUNTRY', 'undefined'),
 
     /*
     |--------------------------------------------------------------------------

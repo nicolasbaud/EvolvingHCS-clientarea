@@ -12,7 +12,7 @@
     <div class="col-3">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <a class="nav-link active" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-general" aria-selected="true">Paramètres</a>
-            <a class="nav-link" id="v-pills-smtp-tab" data-toggle="pill" href="#v-pills-smtp" role="tab" aria-controls="v-pills-smtp" aria-selected="false">Profile</a>
+            <a class="nav-link" id="v-pills-smtp-tab" data-toggle="pill" href="#v-pills-smtp" role="tab" aria-controls="v-pills-smtp" aria-selected="false">Paramètres SMTP</a>
         </div>
     </div>
     <div class="col-9">
@@ -34,6 +34,26 @@
                                 <div class="col-lg-6">
                                     <label>Url</label>
                                     <input type="text" name="APP_URL" value="{{ old('APP_URL', config('app.url')) }}" class="form-control">
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Adresse de l'application</label>
+                                    <input type="text" name="APP_ADDRESS" value="{{ config('app.address') }}" class="form-control">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Code Postal de l'application</label>
+                                    <input type="text" name="APP_ZIP" value="{{ config('app.zip') }}" class="form-control">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Ville de l'application</label>
+                                    <input type="text" name="APP_CITY" value="{{ config('app.city') }}" class="form-control">
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Région de l'application</label>
+                                    <input type="text" name="APP_STATE" value="{{ config('app.state') }}" class="form-control">
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Pays de l'application</label>
+                                    <input type="text" name="APP_COUNTRY" value="{{ config('app.country') }}" class="form-control">
                                 </div>
                             </div>
                         </div>

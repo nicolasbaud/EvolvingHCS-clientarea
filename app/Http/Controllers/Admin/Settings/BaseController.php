@@ -43,6 +43,31 @@ class BaseController extends Controller
                 Setting::create(['key' => 'APP_URL', 'value' => $request->APP_URL]);
             }
         }
+        if (config('app.address') != $request->APP_ADDRESS) {
+            if (Setting::where('key', 'APP_ADDRESS')->count() == '0') {
+                Setting::create(['key' => 'APP_ADDRESS', 'value' => $request->APP_ADDRESS]);
+            }
+        }
+        if (config('app.zip') != $request->APP_ZIP) {
+            if (Setting::where('key', 'APP_ZIP')->count() == '0') {
+                Setting::create(['key' => 'APP_ZIP', 'value' => $request->APP_ZIP]);
+            }
+        }
+        if (config('app.state') != $request->APP_STATE) {
+            if (Setting::where('key', 'APP_STATE')->count() == '0') {
+                Setting::create(['key' => 'APP_STATE', 'value' => $request->APP_STATE]);
+            }
+        }
+        if (config('app.city') != $request->APP_CITY) {
+            if (Setting::where('key', 'APP_CITY')->count() == '0') {
+                Setting::create(['key' => 'APP_CITY', 'value' => $request->APP_CITY]);
+            }
+        }
+        if (config('app.country') != $request->APP_COUNTRY) {
+            if (Setting::where('key', 'APP_COUNTRY')->count() == '0') {
+                Setting::create(['key' => 'APP_COUNTRY', 'value' => $request->APP_COUNTRY]);
+            }
+        }
         if (config('mail.mailers.smtp.host') != $request->MAIL_HOST) {
             if (Setting::where('key', 'MAIL_HOST')->count() == '0') {
                 Setting::create(['key' => 'MAIL_HOST', 'value' => $request->MAIL_HOST]);
