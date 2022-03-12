@@ -44,14 +44,17 @@
       </div>
       @if ($invoice->status != 'paid')
       <div class="card-header d-flex justify-content-end">
-        <form method="post" action="{{ route('invoice.pay', ['id' => $invoice->invoiceid]) }}">
-          <input type="hidden" name="method" value="paypal">
+        <form method="post" action="{{ route('invoice.pay.balance', ['id' => $invoice->invoiceid]) }}">
+          <button type="submit" class="btn btn-primary"><i class="fa fa-euro-sign"></i> Payer par solde</button>
+          @csrf
+        </form>
+        &nbsp;
+        <form method="post" action="{{ route('invoice.pay.paypal', ['id' => $invoice->invoiceid]) }}">
           <button type="submit" class="btn btn-primary" style="background-color: #0070BA;"><i class="fa fa-paypal"></i> Payer par PayPal</button>
           @csrf
         </form>
         &nbsp;
-        <form method="post" action="{{ route('invoice.pay', ['id' => $invoice->invoiceid]) }}">
-          <input type="hidden" name="method" value="stripe">
+        <form method="post" action="{{ route('invoice.pay.stripe', ['id' => $invoice->invoiceid]) }}">
           <button type="submit" class="btn btn-primary" style="background-color: #6772e5;"><i class="fa fa-credit-card"></i> Payer par carte bancaire</button>
           @csrf
         </form>

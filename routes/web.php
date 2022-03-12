@@ -23,7 +23,9 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'render'])->name('h
 Route::get('/invoices', [App\Http\Controllers\Invoices\ListController::class, 'render'])->name('invoices');
 Route::get('/invoice/{id}', [App\Http\Controllers\Invoices\ViewController::class, 'render'])->name('invoice.view');
 Route::get('/invoice/{id}/result', [App\Http\Controllers\Invoices\ResultController::class, 'render'])->name('invoice.result');
-Route::post('/invoice/{id}/pay', [App\Http\Controllers\Invoices\PayController::class, 'create'])->name('invoice.pay');
+Route::post('/invoice/{id}/paypal', [App\Http\Controllers\Invoices\PayController::class, 'paypal'])->name('invoice.pay.paypal');
+Route::post('/invoice/{id}/stripe', [App\Http\Controllers\Invoices\PayController::class, 'stripe'])->name('invoice.pay.stripe');
+Route::post('/invoice/{id}/balance', [App\Http\Controllers\Invoices\PayController::class, 'balance'])->name('invoice.pay.balance');
 
 Route::get('/services/game', [App\Http\Controllers\Services\Game\ListController::class, 'render'])->name('services.game');
 Route::get('/service/game/{id}', [App\Http\Controllers\Services\Game\ManageController::class, 'render'])->name('service.game.manage');

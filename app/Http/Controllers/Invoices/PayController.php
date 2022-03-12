@@ -19,10 +19,10 @@ class PayController extends Controller
 
     public static function client()
     {
-        if (env('PAYPAL_MODE') == 'sandbox') {
-            return new PayPalHttpClient(new SandboxEnvironment(env('PAYPAL_SANDBOX_CLIENTID'), env('PAYPAL_SANDBOX_SECRET')));
+        if (config('paypal.mode') == 'sandbox') {
+            return new PayPalHttpClient(new SandboxEnvironment(config('paypal.sandbox.client_id'), config('paypal.sandbox.client_secret')));
         } else {
-            return new PayPalHttpClient(new ProductionEnvironment(env('PAYPAL_CLIENTID'), env('PAYPAL_SECRET')));
+            return new PayPalHttpClient(new ProductionEnvironment(config('paypal.live.client_id'), config('paypal.live.client_secret')));
         }
     }
  
@@ -34,7 +34,7 @@ class PayController extends Controller
                 array(
                     'return_url' => route('invoice.result', ['id' => $id]),
                     'cancel_url' => route('invoice.result', ['id' => $id]),
-                    'brand_name' => 'AstraCloud By SwizCloud',
+                    'brand_name' => config('app.name'),
                     'locale' => 'fr-FR',
                     'landing_page' => 'BILLING',
                     'shipping_preference' => 'NO_SHIPPING',
@@ -42,10 +42,10 @@ class PayController extends Controller
                 ),
             'purchase_units' => array(
                 0 => array(
-                    'reference_id' => 'SCFRFUNDS',
+                    'reference_id' => 'EHCSFUNDS',
                     'description' => 'Invoice #'.$id,
-                    'custom_id' => 'SCFR-CREDIT',
-                    'soft_descriptor' => 'scfrcredit',
+                    'custom_id' => 'EHCS-CREDIT',
+                    'soft_descriptor' => 'ehcscredit',
                     'amount' => array(
                         'currency_code' => 'EUR',
                         'value' => $price,
@@ -92,54 +92,71 @@ class PayController extends Controller
         return $response;
     }
 
-    public function create($id, Request $request)
+    public function get($id)
     {
-        $invoice = Invoices::where('invoiceid', $id)->where('userid', Auth::user()->id);
-        $count = Invoices::where('invoiceid', $id)->where('userid', Auth::user()->id)->count();
-        if ($count == '1') {
-            $amount = InvoiceItems::where('invoiceid', $invoice->first()->invoiceid)->where('userid', Auth::user()->id)->sum('amount');
-            if (!is_null($invoice->first()->promocode) AND Promotions::where('code', $invoice->first()->promocode)->count() == '1') {
-                $total = ($amount - ($amount * (Promotions::where('code', $invoice->first()->promocode)->first()->value / 100)));
-            } else {
-                $total = $amount;
-            }
-            if ($request->method == 'stripe') {
-                if ($total >= '1') {
-                    \Stripe\Stripe::setApiKey(config('stripe.secret'));
-                    $create = \Stripe\Checkout\Session::create([
-                        'line_items' => [[
-                            'price_data' => [
-                                'currency' => 'eur',
-                                'product_data' => [
-                                    'name' => 'Invoice #'.$invoice->first()->invoiceid,
-                                ],
-                            'unit_amount' => $total * 100,
-                            ],
-                          'quantity' => 1,
-                        ]],
-                        'mode' => 'payment',
-                        'success_url' => route('invoice.result', ['id' => $invoice->first()->invoiceid]),
-                        'cancel_url' => route('invoice.result', ['id' => $invoice->first()->invoiceid]),
-                    ]);
-                    $invoice->update(['payment_method' => 'stripe', 'txid' => $create->id, 'status' => 'pending']);
-                    return redirect($create->url);
-                } else {
-                    return back()->with('danger', 'Somme inférieur au montant requis');
-                }
-            } else if ($request->method == 'paypal') {
-                $createOrder = self::createOrder($invoice->first()->invoiceid, $total);
-                $invoice->update(['payment_method' => 'paypal', 'txid' => $createOrder->result->id, 'status' => 'pending']);
-                return redirect($createOrder->result->links[1]->href);
-            } else {
-                return back()->with('danger', 'Méthode de paiement indisponible.');
-            }
+        $this->invoice = Invoices::where('invoiceid', $id)->where('userid', Auth::user()->id);
+        
+        if (!$this->invoice) {
+            throw new NotFoundHttpException;
+        }
+        
+        $amount = InvoiceItems::where('invoiceid', $this->invoice->first()->invoiceid)->where('userid', Auth::user()->id)->sum('amount');
+        if (!is_null($this->invoice->first()->promocode) AND Promotions::where('code', $this->invoice->first()->promocode)->count() == '1') {
+            $this->total = ($amount - ($amount * (Promotions::where('code', $this->invoice->first()->promocode)->first()->value / 100)));
         } else {
-            throw new NotFoundHttpException();
+            $this->total = $amount;
         }
     }
 
-    public function store()
+    public function stripe($id)
     {
+        $this->get($id);
 
+        if (!config('stripe.secret')) {
+            throw new \Exception("The key is empty.");            
+        }
+
+        if ($this->total >= '1') {
+            \Stripe\Stripe::setApiKey(config('stripe.secret'));
+            $create = \Stripe\Checkout\Session::create([
+                'line_items' => [[
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => 'Invoice #'.$this->invoice->first()->invoiceid,
+                        ],
+                    'unit_amount' => $this->total * 100,
+                    ],
+                  'quantity' => 1,
+                ]],
+                'mode' => 'payment',
+                'success_url' => route('invoice.result', ['id' => $this->invoice->first()->invoiceid]),
+                'cancel_url' => route('invoice.result', ['id' => $this->invoice->first()->invoiceid]),
+            ]);
+            $this->invoice->update(['payment_method' => 'stripe', 'txid' => $create->id, 'status' => 'pending']);
+            return redirect($create->url);
+        } else {
+            return back()->with('danger', 'Somme inférieur au montant requis');
+        }
+    }
+
+    public function paypal($id)
+    {
+        $this->get($id);
+
+        if (!config('stripe.secret')) {
+            throw new \Exception("The key is empty.");            
+        }
+
+        $createOrder = self::createOrder($this->invoice->first()->invoiceid, $this->total);
+        $this->invoice->update(['payment_method' => 'paypal', 'txid' => $createOrder->result->id, 'status' => 'pending']);
+        return redirect($createOrder->result->links[1]->href);
+    }
+
+    public function balance($id)
+    {
+        $this->get($id);
+        $this->invoice->update(['payment_method' => 'balance', 'txid' => 'unrequired', 'status' => 'pending']);
+        return redirect(route('invoice.result', ['id' => $id]));
     }
 }
