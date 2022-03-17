@@ -101,8 +101,8 @@ class BaseController extends Controller
     public function delete($id)
     {
 
-        PterodactylNodes::where('id', $id)->delete();
+        PterodactylProducts::where('id', $id)->delete();
 
-        return redirect(route('admin.pterodactyl.products'))->with('success', 'Node supprimé');
+        return redirect(route('admin.pterodactyl.products'))->with('success', 'Produit supprimé');
     }
 }
