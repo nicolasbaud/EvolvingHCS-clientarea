@@ -50,7 +50,7 @@ class ResultController extends Controller
                     $retrieve = \Stripe\Checkout\Session::retrieve($info->first()->txid, []);
                     if ($retrieve->payment_status == 'paid') {
                         $status = 'paid';
-                        Transactions::insert(['gateway' => $info->first()->payment_method, 'amount' => $items->sum('amount'), 'status' => 'remove']);
+                        Transactions::create(['gateway' => $info->first()->payment_method, 'amount' => $items->sum('amount'), 'status' => 'remove']);
                         $info->update([
                             'paid_on' => now(),
                             'status' => 'paid',
@@ -65,7 +65,7 @@ class ResultController extends Controller
                         $capture = self::captureOrder($info->first()->txid);
                         if ($capture->result->status == 'COMPLETED') {
                             $status = 'paid';
-                            Transactions::insert(['gateway' => $info->first()->payment_method, 'amount' => $items->sum('amount'), 'status' => 'remove']);
+                            Transactions::create(['gateway' => $info->first()->payment_method, 'amount' => $items->sum('amount'), 'status' => 'remove']);
                             $info->update([
                                 'txid' => $capture->result->id,
                                 'paid_on' => now(),
@@ -80,7 +80,7 @@ class ResultController extends Controller
                     }
                 } elseif ($info->first()->payment_method == 'balance') {
                     if (Auth::user()->balance >= $items->sum('amount')) {
-                        Transactions::insert(['gateway' => $info->first()->payment_method, 'amount' => $items->sum('amount'), 'status' => 'remove']);
+                        Transactions::create(['gateway' => $info->first()->payment_method, 'amount' => $items->sum('amount'), 'status' => 'remove']);
                         $user = Auth::user();
                         $user->update(['balance' => Auth::user()->balance - $items->sum('amount')]);
                         $info->update([
