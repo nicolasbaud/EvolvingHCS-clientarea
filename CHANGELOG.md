@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/laravel/laravel/compare/v1.0.0...main)
 
+## [v1.0.0](https://github.com/laravel/laravel/compare/v1.0.0...v1.0.0) - 2022-03-18
+
+**Full Changelog**: https://github.com/nicolasbaud/EvolvingHCS-clientarea/compare/v1.0.0-beta.2...v1.0.0
+
 ## [v1.0.0](https://github.com/laravel/laravel/compare/v1.0.0...v1.0.0) - 2022-03-14
 
 **Full Changelog**: https://github.com/nicolasbaud/EvolvingHCS-clientarea/compare/v1.0.0-beta.2...v1.0.0
