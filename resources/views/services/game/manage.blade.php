@@ -101,6 +101,7 @@
                 <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
               </div>
             </div>
+            @if ($service->first()->recurrent_price != '0' || $service->first()->first_price != '0')
             <p class="mb-0">
               <span class="text-success text-sm font-weight-bolder">
                 @if (!str_contains((($service->first()->recurrent_price - $service->first()->first_price) / $service->first()->first_price) * 100, '-'))
@@ -111,6 +112,7 @@
               </span>
               depuis le premier paiement
             </p>
+            @endif
           </div>
         </div>
       </div>
