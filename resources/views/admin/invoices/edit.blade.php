@@ -99,6 +99,7 @@
                                 <select class="@error('type') is-invalid @enderror form-control" name="type">
                                     <option value="hosting.game">Livraison d'un service game</option>
                                     <option value="renew.game">Renouvellement d'un service game</option>
+                                    <option value="add.funds">Ajout de fonds</option>
                                 </select>
                             </td>
                             <td>
