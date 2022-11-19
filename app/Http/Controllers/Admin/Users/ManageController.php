@@ -84,7 +84,7 @@ class ManageController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect(route('user.edit', ['id' => $id]))->with('success', 'Mot de passe édité');
+        return redirect(route('admin.user.edit', ['id' => $id]))->with('success', 'Mot de passe édité');
     }
 
     public function balance($id, Request $request)
